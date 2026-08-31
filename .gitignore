@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Nx
+.nx/
+nx.env
+.nxignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+.gitkeep
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Testing
+.test-cache/
+
+# Vite
+.vite/
