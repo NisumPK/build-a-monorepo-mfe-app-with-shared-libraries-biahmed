@@ -845,7 +845,7 @@ An **app** is a complete thing you can run - you hit refresh and it works. A **l
 
 ## Question 6: What happens if the Shop Remote is unavailable when the Shell tries to load it?
 
-Right now? Page goes blank and errors out. That's not great. In a real system, you'd want a fallback - either show old cached data, or display "this feature is temporarily unavailable, here's why". You wouldn't want the whole app to crash just because one feature went down. It's like your phone still works even if one app crashes.
+We implemented an **Error Boundary** that catches the error and displays "Feature Temporarily Unavailable" instead of crashing the whole app. This way, if Shop goes down, Shell still works - users just see that one feature is temporarily unavailable. The rest of the app keeps running. It's like your phone still works even if one app crashes - you don't lose everything just because one feature failed.
 
 ## Question 7: Why is runtime composition different from simply importing the Shop application's source code directly into the Shell?
 
