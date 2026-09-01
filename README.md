@@ -819,4 +819,38 @@ Helpful links:
 Build it, experiment with the Nx workspace structure and Module Federation, and most importantly — **understand how applications, shared libraries, and Micro Frontends work together in a monorepo.**
 
 
+---
+
+# 🏗️ Architecture Decisions
+
+## Question 1: What is the responsibility of the Shell application and what is the responsibility of the Shop application?
+
+**Shell** is the container app - it handles the main layout, routing, and navigation. Think of it like the frame of a house. **Shop** is the tenant - it only cares about displaying products. The Shell says "I'll handle where to show you" and Shop says "I'll handle what to show". They don't step on each other's toes.
+
+## Question 2: Why is Module Federation useful for Micro Frontends?
+
+Without Module Federation, if you want to use Shop's code in Shell, you'd have to copy it into your build or import from source. That's a mess - you have tight coupling and version conflicts. Module Federation lets them stay completely separate. Shop can be deployed independently, updated independently, and Shell just... plugs it in at runtime. It's like USB ports instead of soldering wires together.
+
+## Question 3: Why should the Product interface be placed in a shared library instead of being duplicated inside the Shop application?
+
+If both Shop and Shell define Product differently, you'll end up with bugs. Shell thinks a product has one shape, Shop thinks it has another. The shared interface is just saying "this is THE shape of a product in our system". Everyone uses the same template. No surprises.
+
+## Question 4: What are the benefits of creating a shared UI library in an Nx monorepo?
+
+You don't want Button components looking different in Shop vs Shell. Having them in one place means consistent design, less code duplication, and when you need to fix something (like a button being broken), you fix it once and both apps are fixed. It's just... common sense really.
+
+## Question 5: What is the difference between an Nx application and an Nx library?
+
+An **app** is a complete thing you can run - you hit refresh and it works. A **library** is just a toolbox - it doesn't run on its own. Think of Shop as a restaurant (complete) and the UI library as just the kitchen equipment. The equipment doesn't exist on its own, but every restaurant needs it.
+
+## Question 6: What happens if the Shop Remote is unavailable when the Shell tries to load it?
+
+We implemented an **Error Boundary** that catches the error and displays "Feature Temporarily Unavailable" instead of crashing the whole app. This way, if Shop goes down, Shell still works - users just see that one feature is temporarily unavailable. The rest of the app keeps running. It's like your phone still works even if one app crashes - you don't lose everything just because one feature failed.
+
+## Question 7: Why is runtime composition different from simply importing the Shop application's source code directly into the Shell?
+
+If Shell just imported Shop's code directly, they'd be one big ball at build time. Every time either app changes, the other has to rebuild. Slow. Hard to deploy independently. Runtime composition means Shell and Shop are strangers until the app actually runs. Shell says "hey, give me Shop's ProductList" and Shop responds. No build-time dependency, no tight coupling. Clean separation.
+
+---
+
 ## Happy Building! ⚡

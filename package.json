@@ -1,0 +1,26 @@
+{
+  "name": "build-a-monorepo-mfe-app-with-shared-libraries-biahmed",
+  "version": "1.0.0",
+  "description": "## 📌 Overview",
+  "main": "index.js",
+  "scripts": {
+    "shop:dev": "cd apps/shop && npm run dev",
+    "shell:dev": "cd apps/shell && npm run dev",
+    "dev": "npm install && npm --prefix apps/shop install && npm --prefix apps/shell install && concurrently -k -n shop,shell -c blue,green \"npm --prefix apps/shop run dev\" \"npm --prefix apps/shell run dev\""
+  },
+  "devDependencies": {
+    "@nx/react": "^23.1.2",
+    "@nx/vite": "^23.1.2",
+    "@originjs/vite-plugin-federation": "^1.4.1",
+    "@vitejs/plugin-react": "^6.1.0",
+    "concurrently": "^10.0.5",
+    "nx": "^23.1.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
